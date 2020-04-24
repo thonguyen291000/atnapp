@@ -46,3 +46,22 @@ export const signUp = (newUser) => {
     })
   }
 }
+
+export const updateUser = (userData) => {
+  return (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection("users").doc(userData.id).set({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      initials: userData.firstName[0] + userData.lastName[0],
+      shopName: userData.shopName
+    })
+    .then(() => {
+      dispatch({ type: "UPDATE_USER" });
+    })
+    .catch((err) => {
+      console.log(err)
+      dispatch({ type: "UPDATE_USER_FAILED", error: err });
+    })
+  }
+}

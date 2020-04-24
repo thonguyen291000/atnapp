@@ -8,7 +8,7 @@ const SignedInLinksDirector = (props) => {
         <ul className="right hide-on-med-and-down">
             <li><NavLink to={"/projects/" + props.profile.shopName}>All Results</NavLink></li>
             <li><a onClick={props.signOut}>Log Out</a></li>
-            <li><NavLink to="/" className="btn btn-floating pink lighten-1">
+            <li><NavLink to={"/user/"+ props.auth.uid} className="btn btn-floating pink lighten-1">
                 {props.profile.initials}
             </NavLink></li>
         </ul>

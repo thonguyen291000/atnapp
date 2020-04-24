@@ -16,14 +16,14 @@ class Dashboard extends Component {
         return (
             <div className="dashboard container">
                 <div className="row">
-                    <div className="col s12 m5">
-                        <ResultList projects={projects} profile={profile} comments={comments}/>
+                    <div className="col s12 m3">
+                        <Notifications notifications={notifications}/>
                     </div>
                     <div className="col s12 m4">
                         <CommentList comments={comments} profile={profile}/>
                     </div>
-                    <div className="col s12 m3">
-                        <Notifications notifications={notifications}/>
+                    <div className="col s12 m5">
+                        <ResultList projects={projects} profile={profile} comments={comments}/>
                     </div>
                 </div>
             </div>

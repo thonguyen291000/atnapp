@@ -27,7 +27,7 @@ const ProjectAllTable = (props) => {
     
     return (
         <div className="container section">
-            <table className="highlight responsive-table" style={styles,styleTable}>
+            <table className="highlight responsive-table" style={styles, styleTable}>
                 <thead>
                 <tr>
                     <th className="center" style={styles}>Created time</th>

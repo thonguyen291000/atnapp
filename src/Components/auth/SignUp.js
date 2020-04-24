@@ -10,8 +10,16 @@ class SignUp extends Component {
         firstName: "",
         lastName: "",
         shopName: "",
-
+        errors: null
     }
+
+    componentDidMount = () => {
+        this.setState({
+            ...this.state,
+            errors: this.props.authError
+        })
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.id] : e.target.value,
@@ -24,6 +32,12 @@ class SignUp extends Component {
     render() {
         const {auth, authError} = this.props;
         if(auth.uid) return <Redirect to="/"/>
+        let currentError;
+        if (this.state.errors === authError) {
+            currentError = null;
+        } else {
+            currentError = authError;
+        }
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
@@ -51,7 +65,7 @@ class SignUp extends Component {
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">Sign up</button>
                         <div className="red-text center">
-                            {authError ? <p>{authError}</p> : null}
+                            {currentError ? <p>{currentError}</p> : null}
                         </div>
                     </div>
                 </form>

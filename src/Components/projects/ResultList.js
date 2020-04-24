@@ -7,6 +7,7 @@ const ProjectList = (props) => {
     const projects = identifyRole === "root" ? props.projects && props.projects : props.projects && props.projects.filter(project => {
         return project.shopName === identifyRole
     })
+
     return (
         <div className="project-list section">
             {projects && projects.map(project => {

@@ -8,6 +8,7 @@ import SignUp from "./Components/auth/SignUp"
 import CreateSaledResult from "./Components/projects/CreateSaledResult"
 import ResultAllTable from './Components/projects/ResultAllTable';
 import CreateComment from "./Components/Comments/CreateComment";
+import UserDetail from './Components/user/UserDetail';
 
 function App() {
   return (
@@ -16,12 +17,13 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Dashboard} /> 
-          <Route path="/project/:id" component={ResultDetails} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/create" component={CreateSaledResult} />
-          <Route path="/projects/:shopName" component={ResultAllTable} />
-          <Route path="/comment/:receiver/:saledResult" component={CreateComment} />
+          <Route exact path="/project/:id" component={ResultDetails} />
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/create" component={CreateSaledResult} />
+          <Route exact path="/projects/:shopName" component={ResultAllTable} />
+          <Route exact path="/comment/:receiver/:saledResult" component={CreateComment} />
+          <Route exact path="/users/:id" component={UserDetail} />
         </Switch>
       </div>
     </BrowserRouter>

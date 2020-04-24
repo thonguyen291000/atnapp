@@ -12,7 +12,7 @@ const Navbar = (props) => {
     const {auth, profile} = props;
     const regexAuth = /^root@[a-zA-z]+/;
     const links = auth.uid ? 
-        regexAuth.test(auth.email) ? <SignedInLinksDirector profile={profile}/> :  <SignedInLinks  profile={profile}/> :<SignedOutLinks />;
+        regexAuth.test(auth.email) ? <SignedInLinksDirector auth={auth} profile={profile}/> :  <SignedInLinks  auth={auth} profile={profile}/> :<SignedOutLinks />;
     const icons = auth.uid ? <Icons profile={profile}/> :  null;
     return (
         <nav className="nav-wrapper grey darken-3">

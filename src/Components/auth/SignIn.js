@@ -6,8 +6,17 @@ import {Redirect} from "react-router-dom"
 class SignIn extends Component {
     state = {
         email: "",
-        password: ""
+        password: "",
+        errors: null
     }
+
+    componentDidMount = () => {
+        this.setState({
+            ...this.state,
+            errors: this.props.authError
+        })
+    }
+
     handleChange = (e) => {
         this.setState({
             [e.target.id] : e.target.value
@@ -15,11 +24,20 @@ class SignIn extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.signIn(this.state)
+        const creds = {};
+        creds.email = this.state.email;
+        creds.password = this.state.password;
+        this.props.signIn(creds)
     }
     render() {
         const {authError, auth} = this.props;
         if(auth.uid) return <Redirect to="/"/>
+        let currentError;
+        if (this.state.errors === authError) {
+            currentError = null;
+        } else {
+            currentError = authError;
+        }
 
         return (
             <div className="container">
@@ -36,7 +54,7 @@ class SignIn extends Component {
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">Login</button>
                         <div className="red-text center">
-                            {authError ? <p>{authError}</p>: null}
+                            {currentError ? <p>{currentError}</p>: null}
                         </div>
                     </div>
                 </form>
