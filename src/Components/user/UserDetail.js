@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {connect} from "react-redux"
 import {firestoreConnect} from "react-redux-firebase"
 import {compose} from "redux"
-import {Redirect} from "react-router-dom"
 import {updateUser} from "../../store/actions/authAction"
 
 class UserDetail extends Component {
@@ -39,7 +38,7 @@ class UserDetail extends Component {
         this.props.history.push('/');
     }
     render() {
-        const { user, auth, authError } = this.props;
+        const { user, authError } = this.props;
         let currentError;
         if (this.state.errors === authError) {
             currentError = null;

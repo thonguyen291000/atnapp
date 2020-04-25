@@ -11,16 +11,12 @@ const initState = {
 const projectReducer = (state = initState, action) => {
     switch (action.type) {
         case "CREATE_PROJECT":
-            console.log(action.project)
             return state
         case "CREATE_PROJECT_ERROR":
-            console.log(action.err)
             return state
         case "CREATE_COMMENT":
-            console.log(action.comment)
             return state
         case "CREATE_COMMENT_ERROR":
-            console.log(action.err)
             return state
         default:
             return state

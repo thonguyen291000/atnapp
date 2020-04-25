@@ -11,6 +11,14 @@ export const createProject = (project) => {
             authId: authId,
             shopName: profile.shopName,
             createAt: new Date()
+        }).then((res) => {
+            firestore.collection("stocks").doc("w45M4lWVP5a2a7cbtL8d").set({
+                ball: project.stocks.ball - project.ball,
+                doll: project.stocks.doll - project.doll,
+                yoyo: project.stocks.yoyo - project.yoyo,
+                lego: project.stocks.lego - project.lego,
+            })
+
         }).then(
             dispatch({type: "CREATE_PROJECT", project: project})
         ).catch((err) => {

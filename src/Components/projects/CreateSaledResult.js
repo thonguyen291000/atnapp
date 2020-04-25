@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import {connect} from "react-redux"
 import {createProject} from "../../store/actions/projectAction"
 import {Redirect} from "react-router-dom"
+import {firestoreConnect} from "react-redux-firebase"
+import {compose} from "redux"
 
 class CreateProject extends Component {
     state = {
@@ -16,12 +18,23 @@ class CreateProject extends Component {
     }
     handleChange = (e) => {
         this.setState({
-            [e.target.id] : e.target.value
+            [e.target.id] : e.target.value,
         })
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.createProject(this.state)
+        const stock = this.props.stocks[0];
+        const ball = this.state.ball;
+        const doll = this.state.doll;
+        const lego = this.state.lego;
+        const yoyo = this.state.yoyo;
+        const profit = ball * 5 + doll * 7 + lego * 20 + yoyo * 15;
+        const result = {
+            ...this.state,
+            profit: profit,
+            stocks: stock
+        }
+        this.props.createProject(result)
         this.props.history.push("/")
     }
     render() {
@@ -53,10 +66,6 @@ class CreateProject extends Component {
                         <input type="number" id="yoyo" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="profit">Profit</label>
-                        <input type="number" id="profit" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
                         <label htmlFor="warehouseState">Warehouse state</label>
                         <input type="text" id="warehouseState" onChange={this.handleChange} />
                     </div>
@@ -75,7 +84,8 @@ class CreateProject extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        stocks: state.firestore.ordered.stocks
     }
 }
 
@@ -85,4 +95,9 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProject)
+export default compose(
+    firestoreConnect([
+        {collection: 'stocks'}
+    ]),
+    connect(mapStateToProps, mapDispatchToProps)
+)(CreateProject)

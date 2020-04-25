@@ -25,7 +25,10 @@ class CreateComment extends Component {
         if(!auth.uid) return <Redirect to="/signin"/>
         const {profile} = this.props;
         if (profile.shopName === this.props.match.params.receiver) {
-            this.state.receiver = "root"
+            this.setState({
+                ...this.state,
+                receiver: "root"
+            })
         }
         return (
             <div className="container">

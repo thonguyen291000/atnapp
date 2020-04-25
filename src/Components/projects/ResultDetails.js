@@ -14,11 +14,10 @@ const style = {
 const ProjectDetails = (props) => {
     const {project, auth, comments} = props;
     if(!auth.uid) return <Redirect to="/signin"/>
-
     const comment = comments ? comments.filter(comment => {
         return comment.saledResult === project.title
     }) : null;
-
+    console.log(comment)
     if (project) {
         return (
             <div className="container section">
@@ -37,7 +36,7 @@ const ProjectDetails = (props) => {
                                 return (
                                     <p>Comment {comment.indexOf(subComment)+1}. {subComment.content}</p>
                                 )
-                            }) : <span>No comments</span>}</li>
+                            }) : null}</li>
                             <div className="row" style={style}>
                                 <div className="col s12 m6">
                                     <li className="center-align"><Link to={"/projects/" + props.profile.shopName} className="btn black white-text text-darken-4">All results</Link></li>

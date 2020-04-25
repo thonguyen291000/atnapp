@@ -3,10 +3,7 @@ import ResultSummary from "./ResultSummary"
 import {Link} from "react-router-dom"
 
 const ProjectList = (props) => {
-    const identifyRole =props.profile.shopName;
-    const projects = identifyRole === "root" ? props.projects && props.projects : props.projects && props.projects.filter(project => {
-        return project.shopName === identifyRole
-    })
+    const projects = props.projects;
 
     return (
         <div className="project-list section">
