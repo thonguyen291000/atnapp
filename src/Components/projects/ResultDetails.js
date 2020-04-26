@@ -1,14 +1,30 @@
-import React from 'react'
-import {connect} from "react-redux"
-import {firestoreConnect} from "react-redux-firebase"
-import {compose} from "redux"
-import {Redirect} from "react-router-dom"
-import moment from "moment"
-import {Link} from "react-router-dom"
-import {NumberFormat} from "../layout/NumberFormat"
+import React from 'react';
+import {connect} from "react-redux";
+import {firestoreConnect} from "react-redux-firebase";
+import {compose} from "redux";
+import {Redirect} from "react-router-dom";
+import moment from "moment";
+import {Link} from "react-router-dom";
+import {NumberFormat} from "../layout/NumberFormat";
+
+// MUI stuff
+import { IconButton } from '@material-ui/core';
+import AddComment from '@material-ui/icons/AddComment';
+import ListAlt from '@material-ui/icons/ListAlt';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const style = {
     marginTop: "20px",
+}
+
+const handleViewAll = () => {
+    const viewClick = document.getElementById('viewAll');
+    viewClick.click();
+}
+
+const handleComment = () => {
+    const comment = document.getElementById('comment');
+    comment.click();
 }
 
 const ProjectDetails = (props) => {
@@ -39,10 +55,24 @@ const ProjectDetails = (props) => {
                             }) : null}</li>
                             <div className="row" style={style}>
                                 <div className="col s12 m6">
-                                    <li className="center-align"><Link to={"/projects/" + props.profile.shopName} className="btn black white-text text-darken-4">All results</Link></li>
+                                    <li className="center-align">
+                                        <Link to={"/projects/" + props.profile.shopName} id="viewAll" hidden="hidden"></Link>
+                                        <Tooltip title="All results" placement="top">
+                                            <IconButton onClick={handleViewAll} className="button">
+                                                <ListAlt color="secondary"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </li>
                                 </div>
                                 <div className="col s12 m5 offet-m1">
-                                <li className="center-align"><Link to={"/comment/" + project.shopName + "/" + project.title} className="btn black white-text text-darken-4">Comments</Link></li>
+                                <li className="center-align">
+                                    <Link to={"/comment/" + project.shopName + "/" + project.title} id="comment" hidden="hidden"></Link>
+                                    <Tooltip title="Comment" placement="top">
+                                        <IconButton onClick={handleComment} className="button">
+                                            <AddComment color="secondary"/>
+                                        </IconButton>
+                                    </Tooltip>
+                                </li>
                                 </div>
                             </div>
                         </ul>
