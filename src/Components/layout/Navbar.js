@@ -10,6 +10,7 @@ import Icons from "./Icons"
 const Navbar = (props) => {
     
     const {auth, profile} = props;
+    console.log(auth)
     const regexAuth = /^root@[a-zA-z]+/;
     const links = auth.uid ? 
         regexAuth.test(auth.email) ? <SignedInLinksDirector auth={auth} profile={profile}/> :  <SignedInLinks  auth={auth} profile={profile}/> :<SignedOutLinks />;
