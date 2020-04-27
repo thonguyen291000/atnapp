@@ -26,7 +26,7 @@ exports.projectCreated = functions.firestore.document("projects/{projectId}").on
 exports.commentCreated = functions.firestore.document("comments/{commentId}").onCreate(doc => {
     const comment = doc.data();
     const notification = {
-        content: "sended a comment",
+        content: "a comment",
         user: `${comment.sender} send to ${comment.receiver}`,
         time: admin.firestore.FieldValue.serverTimestamp()
     }

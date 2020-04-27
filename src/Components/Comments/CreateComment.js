@@ -1,59 +1,102 @@
-import React, { Component } from 'react'
-import {connect} from "react-redux"
-import {createComment} from "../../store/actions/projectAction"
-import {Redirect} from "react-router-dom"
+import React, { Component, Fragment } from 'react';
+import {connect} from "react-redux";
+import {createComment} from "../../store/actions/projectAction";
+// MUI stuff
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+// Icons
+import AddComment from '@material-ui/icons/AddComment';
+
+const styles = {
+    textField: {
+        margin: '10px auto 10px auto'
+      },
+}
 
 class CreateComment extends Component {
     state = {
         title: "",
         content: "",
-        receiver: this.props.match.params.receiver,
-        saledResult: this.props.match.params.saledResult
+        receiver: this.props.profile.shopName === this.props.receiver ? "root" : this.props.receiver,
+        saledResult: this.props.saledResult,
+        open: false
     }
-    handleChange = (e) => {
+    handleOpen = () => {
+        this.setState({ open: true });
+    }
+    handleClose = () => {
+        this.setState({ open: false });
+    }
+    handleChange = (event) => {
         this.setState({
-            [e.target.id] : e.target.value
+            [event.target.name] : event.target.value
         })
     }
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.createComment(this.state)
-        this.props.history.push("/")
+    handleSubmit = () => {
+        const comment = {
+            title: this.state.title,
+            content: this.state.content,
+            receiver: this.props.profile.shopName === this.props.receiver ? "root" : this.props.receiver,
+            saledResult: this.props.saledResult,
+        };
+        this.props.createComment(comment);
+        this.handleClose();
     }
     render() {
-        const {auth} = this.props;
-        if(!auth.uid) return <Redirect to="/signin"/>
-        const {profile} = this.props;
-        if (profile.shopName === this.props.match.params.receiver) {
-            this.setState({
-                ...this.state,
-                receiver: "root"
-            })
-        }
+
         return (
-            <div className="container">
-                <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-4">Create new comment</h5>
-                    <div className="input-field">
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="content">Content</label>
-                        <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
-                    </div>
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Comment</button>
-                    </div>
-                </form>
-            </div>
+            <Fragment>
+                <Tooltip title="Comment" placement="top">
+                    <IconButton onClick={this.handleOpen} className="iconButton">
+                        <AddComment color="secondary"/>
+                    </IconButton>
+                </Tooltip>
+                <Dialog open={this.state.open} onClose={this.handleClose} maxWidth="sm">
+                    <DialogTitle>Your Comment</DialogTitle>
+                    <DialogContent>
+                            <TextField 
+                                name="title" 
+                                type="text" 
+                                label="Title"  
+                                multiline
+                                rows="2"
+                                placeholder="Title of comment"
+                                onChange={this.handleChange}
+                                fullWidth
+                            />
+                            <TextField 
+                                name="content" 
+                                type="text" 
+                                label="Content" 
+                                multiline
+                                rows="5"
+                                placeholder="Content of comment"
+                                onChange={this.handleChange}
+                                fullWidth
+                            />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.handleSubmit} color="primary">
+                            Send
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </Fragment>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.firebase.auth,
         profile: state.firebase.profile
     }
 }

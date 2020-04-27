@@ -6,12 +6,11 @@ import {Redirect} from "react-router-dom";
 import moment from "moment";
 import {Link} from "react-router-dom";
 import {NumberFormat} from "../layout/NumberFormat";
+import CreateComment from '../Comments/CreateComment';
 
 // MUI stuff
-import { IconButton } from '@material-ui/core';
-import AddComment from '@material-ui/icons/AddComment';
 import ListAlt from '@material-ui/icons/ListAlt';
-import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
 
 const style = {
     marginTop: "20px",
@@ -22,18 +21,12 @@ const handleViewAll = () => {
     viewClick.click();
 }
 
-const handleComment = () => {
-    const comment = document.getElementById('comment');
-    comment.click();
-}
-
 const ProjectDetails = (props) => {
     const {project, auth, comments} = props;
     if(!auth.uid) return <Redirect to="/signin"/>
     const comment = comments ? comments.filter(comment => {
         return comment.saledResult === project.title
     }) : null;
-    console.log(comment)
     if (project) {
         return (
             <div className="container section">
@@ -52,29 +45,16 @@ const ProjectDetails = (props) => {
                                 return (
                                     <p>Comment {comment.indexOf(subComment)+1}. {subComment.content}</p>
                                 )
-                            }) : null}</li>
-                            <div className="row" style={style}>
-                                <div className="col s12 m6">
-                                    <li className="center-align">
-                                        <Link to={"/projects/" + props.profile.shopName} id="viewAll" hidden="hidden"></Link>
-                                        <Tooltip title="All results" placement="top">
-                                            <IconButton onClick={handleViewAll} className="button">
-                                                <ListAlt color="secondary"/>
-                                            </IconButton>
-                                        </Tooltip>
-                                    </li>
-                                </div>
-                                <div className="col s12 m5 offet-m1">
-                                <li className="center-align">
-                                    <Link to={"/comment/" + project.shopName + "/" + project.title} id="comment" hidden="hidden"></Link>
-                                    <Tooltip title="Comment" placement="top">
-                                        <IconButton onClick={handleComment} className="button">
-                                            <AddComment color="secondary"/>
-                                        </IconButton>
-                                    </Tooltip>
-                                </li>
-                                </div>
-                            </div>
+                            }) : null} <span><CreateComment receiver={project.shopName} saledResult={project.title} idResult={props.match.params.id}/></span></li>
+                            <li className="center-align">
+                                <Link to={"/projects/" + props.profile.shopName} id="viewAll" hidden="hidden"></Link>
+                                <Button onClick={handleViewAll} 
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<ListAlt />}>
+                                        View all results
+                                </Button>
+                            </li>
                         </ul>
                     </div>
                     <div className="card-action grey lighten-4 grey-text">

@@ -37,3 +37,7 @@ footer {
   bottom: 0;
   width: 100%;
 }
+
+.iconButton:focus {
+  background-color: #fff;
+}
