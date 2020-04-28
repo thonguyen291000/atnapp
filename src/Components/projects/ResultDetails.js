@@ -7,6 +7,7 @@ import moment from "moment";
 import {Link} from "react-router-dom";
 import {NumberFormat} from "../layout/NumberFormat";
 import CreateComment from '../Comments/CreateComment';
+import DeleteResult from './DeleteResult';
 
 // MUI stuff
 import ListAlt from '@material-ui/icons/ListAlt';
@@ -22,7 +23,7 @@ const handleViewAll = () => {
 }
 
 const ProjectDetails = (props) => {
-    const {project, auth, comments} = props;
+    const {project, auth, comments, profile} = props;
     if(!auth.uid) return <Redirect to="/signin"/>
     const comment = comments ? comments.filter(comment => {
         return comment.saledResult === project.title
@@ -33,6 +34,7 @@ const ProjectDetails = (props) => {
                 <div className="card z-depth-0">
                     <div className="card-content">
                         <span className="card-title">{project.title}</span>
+                        {props.match.params.role !== "root" && <div className="div-delete-button"><DeleteResult resultId={props.match.params.id} history={props.history} role={props.match.params.role}/></div>}
                         <ul>
                             <li>- Quantity of saled ball: {project.ball}</li>
                             <li>- Quantity of saled doll: {project.doll}</li>

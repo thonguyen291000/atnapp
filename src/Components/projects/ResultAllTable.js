@@ -3,10 +3,9 @@ import {connect} from "react-redux"
 import {firestoreConnect} from "react-redux-firebase"
 import {compose} from "redux"
 import moment from "moment"
-import {Link} from "react-router-dom"
 import {Redirect} from "react-router-dom"
 import {NumberFormat} from "../layout/NumberFormat"
-
+import {Link} from "react-router-dom"
 // MUI stuff
 import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
@@ -20,12 +19,8 @@ const styleTable = {
     backgroundColor: "white"
 }
 
-const handleViewDetails = () => {
-    const viewClick = document.getElementById('viewDetails');
-    viewClick.click();
-}
-
 const ProjectAllTable = (props) => {
+    console.log(props)
     const {auth} = props
     if(!auth.uid) return <Redirect to="/signin"/>
 
@@ -51,19 +46,17 @@ const ProjectAllTable = (props) => {
         
                 <tbody>
                     {projects && projects.map(project => {
-                        console.log(project)
                         return (
-                            <tr>
+                            <tr key={project.id}>
                                 <td style={styles}>{moment(project.createAt.toDate().toString()).format('LLLL')}</td>
                                 <td style={styles}>{project.shopName}</td>
                                 <td style={styles}>{project.authLastName} {project.authFirstName}</td>
                                 <td style={styles}>{NumberFormat(project.profit)}</td>
                                 <td style={styles}>{project.note}</td>
                                 <td style={styles}>
-                                    <Link to={"/project/" + project.id} key={project.id} id="viewDetails" hidden="hidden" className="red-text text-darken-4"></Link>
                                     <Tooltip title="View details" placement="top">
-                                        <IconButton onClick={handleViewDetails} className="button">
-                                            <EditIcon color="red"/>
+                                        <IconButton component={Link} to={"/project/" + identifyRole + "/" + project.id} className="button">
+                                            <EditIcon color="action"/>
                                         </IconButton>
                                     </Tooltip>
                                 </td>                      

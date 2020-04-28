@@ -35,3 +35,17 @@ export const createComment = (comment) => {
         })  
     }
 }
+
+export const deleteResult = (resultId) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        //make async to database
+        const firestore = getFirestore();
+        firestore.collection("projects").doc(resultId).delete()
+            .then(
+                dispatch({ type: "DELETE_SUCCESS" })
+            )
+            .catch((err) => {
+                dispatch({ type: "DELETE_FAILED", err })
+            })
+    }
+}

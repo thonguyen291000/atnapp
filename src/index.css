@@ -41,3 +41,9 @@ footer {
 .iconButton:focus {
   background-color: #fff;
 }
+
+.div-delete-button {
+  position: absolute;
+  top: 5%;
+  left: 90%;
+}

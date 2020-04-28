@@ -5,7 +5,8 @@ const initState = {
             {id: 2, title: "Project 2", body: "Body 2"},
             {id: 3, title: "Project 3", body: "Body 3"},
             {id: 4, title: "Project 4", body: "Body 4"}
-        ]
+        ],
+    error: null
 }
 
 const projectReducer = (state = initState, action) => {
@@ -18,6 +19,12 @@ const projectReducer = (state = initState, action) => {
             return state
         case "CREATE_COMMENT_ERROR":
             return state
+        case "DELETE_SUCCESS":
+            return state
+        case "DELETE_FAILED":
+            return {
+                error: action.err
+            }
         default:
             return state
     }

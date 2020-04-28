@@ -48,4 +48,14 @@ exports.userJoined = functions.auth.user().onCreate(user => {
     })
 })
 
+exports.resultDeleted = functions.firestore.document("projects/{projectId}").onDelete(doc => {
+    const project = doc.data();
+    const notification = {
+        content: `deleted ${project.title}`,
+        user: `${project.shopName}`,
+        time: admin.firestore.FieldValue.serverTimestamp()
+    }
+
+    return createNotification(notification)
+})
 
