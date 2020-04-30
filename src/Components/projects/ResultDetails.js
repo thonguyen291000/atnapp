@@ -33,19 +33,26 @@ const ProjectDetails = (props) => {
             <div className="container section">
                 <div className="card z-depth-0">
                     <div className="card-content">
-                        <span className="card-title">{project.title}</span>
+                        <span className="card-title" style={{fontWeight: 'bold'}}>{project.title}</span>
                         {props.match.params.role !== "root" && <div className="div-delete-button"><DeleteResult resultId={props.match.params.id} history={props.history} role={props.match.params.role}/></div>}
                         <ul>
                             <li>- Quantity of saled ball: {project.ball}</li>
+                            <hr/>
                             <li>- Quantity of saled doll: {project.doll}</li>
+                            <hr/>
                             <li>- Quantity of saled lego: {project.lego}</li>
+                            <hr/>
                             <li>- Quantity of saled yoyo: {project.yoyo}</li>
+                            <hr/>
                             <li>- Profit: {NumberFormat(project.profit)}</li>
+                            <hr/>
                             <li>- Warehouse state: {project.warehouseState}</li>
+                            <hr/>
                             <li>- Note: {project.note}</li>
+                            <hr/>
                             <li>- Comment: {comment ? comment.map(subComment => {
                                 return (
-                                    <p>Comment {comment.indexOf(subComment)+1}. {subComment.content}</p>
+                                    <p>Comment {comment.indexOf(subComment)+1}. Title: {subComment.title} / Content: {subComment.content}</p>
                                 )
                             }) : null} <span><CreateComment receiver={project.shopName} saledResult={project.title} idResult={props.match.params.id}/></span></li>
                             <li className="center-align">

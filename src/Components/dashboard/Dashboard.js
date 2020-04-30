@@ -32,7 +32,7 @@ class Dashboard extends Component {
                             <StockInfo profile={profile} projects={projects} stocks={stocks}/>
                         </div>
                         <div className="col s12 m3">
-                            <ResultList projects={roleProjects} profile={profile} comments={comments}/>
+                            <ResultList projects={roleProjects} profile={profile} comments={comments} identifyRole={identifyRole}/>
                         </div>
                     </div>
                 </div>
